@@ -1,18 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB (replace 'yourMongoDBURI' with your actual MongoDB URI)
-mongoose.connect(
-  "mongodb+srv://rajnishanta1:qQOtZardseMZepgs@cluster0.q5xg5dg.mongodb.net/?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+// Enable CORS for all routes
+app.use(cors());
+
+// Connect to MongoDB using the connection string from the environment variables
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // MongoDB schema
 const contactSchema = new mongoose.Schema({
@@ -20,6 +24,7 @@ const contactSchema = new mongoose.Schema({
   email: { type: String, required: true },
   message: { type: String, required: true },
 });
+
 const ContactModel = mongoose.model("Contact", contactSchema);
 
 // Route for handling contact form submissions
@@ -38,7 +43,13 @@ app.post("/api/contact", async (req, res) => {
       .json({ success: true, message: "Contact form submitted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      });
   }
 });
 
