@@ -3,16 +3,19 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 // Enable CORS for all routes
 app.use(cors());
 
 // Connect to MongoDB using the connection string from the environment variables
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://rajnishanta1:qQOtZardseMZepgs@cluster0.q5xg5dg.mongodb.net/?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 // Middleware
 app.use(express.json());
