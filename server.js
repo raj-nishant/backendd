@@ -27,12 +27,10 @@ const ContactModel = mongoose.model("Contact", contactSchema);
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
     unique: true,
   },
   password: {
     type: String,
-    required: true,
   },
 });
 
@@ -48,13 +46,11 @@ app.post("/api/contact", async (req, res) => {
       .json({ success: true, message: "Contact form submitted successfully" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Internal server error",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 });
 
@@ -66,13 +62,11 @@ app.post("/register", async (req, res) => {
     res.status(201).json({ message: "Registration Successful" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Internal server error",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 });
 
@@ -91,13 +85,11 @@ app.post("/login", async (req, res) => {
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Internal server error",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 });
 
