@@ -22,9 +22,9 @@ app.use(express.json());
 
 // MongoDB schema
 const contactSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  message: { type: String, required: true },
+  name: String,
+  email: String,
+  message: String,
 });
 
 const ContactModel = mongoose.model("Contact", contactSchema);
