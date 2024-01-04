@@ -26,8 +26,21 @@ const contactSchema = new mongoose.Schema({
   email: String,
   message: String,
 });
-
 const ContactModel = mongoose.model("Contact", contactSchema);
+
+const UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+
+const User = mongoose.model("User", UserSchema);
 
 // Route for handling contact form submissions
 app.post("/api/contact", async (req, res) => {
@@ -50,6 +63,37 @@ app.post("/api/contact", async (req, res) => {
       message: "Internal server error",
       error: error.message,
     });
+  }
+});
+
+app.post("/register", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log(req.body);
+    const user = new User({ username, password });
+    await user.save();
+    res.status(201).json({ message: "Registration Successful" });
+  } catch (error) {
+    res.status(500).json({ error: "Registration failed" });
+  }
+});
+
+// Login
+app.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username or Password" });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ error: "Login failed" });
   }
 });
 
