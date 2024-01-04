@@ -10,7 +10,7 @@ app.use(cors());
 
 // Connect to MongoDB using the connection string from the environment variables
 mongoose.connect(
-  "mongodb+srv://rajnishanta1:qQOtZardseMZepgs@cluster0.q5xg5dg.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://xenon:xenon@cluster0.x9fpvih.mongodb.net/?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
