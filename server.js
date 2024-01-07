@@ -1,19 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const PORT = 5000;
 
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://xenon:xenon@cluster0.x9fpvih.mongodb.net/?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect("process.env.MONGODB_URL");
 
 app.use(express.json());
 
