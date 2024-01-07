@@ -8,7 +8,11 @@ const PORT = 5000;
 
 app.use(cors());
 
-mongoose.connect("process.env.MONGODB_URL");
+// Correct usage of MONGODB_URL environment variable
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(express.json());
 
